@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { API_GENERATE_EMAIL } from '../../api/api-urls';
 import api from '../../api/axios-instance';
 import { useEmailGeneratorStore } from '../../store/store';
+import { connectionErrorMessage } from '../../utils/constants';
 import { sessionExpired } from '../../utils/helper';
 import CustomToast from '../CustomToast/CustomToast';
 import LeftContent from '../LeftContent/LeftContent';
@@ -52,7 +53,14 @@ const Homepage = () => {
       }));
     }
     catch (error) {
-      if (error?.response?.data?.status === 403) {
+      if (error?.code === 'ERR_NETWORK') {
+        CustomToast({
+          type: 'error',
+          message: connectionErrorMessage,
+          duration: 5000,
+        });
+      }
+      else if (error?.response?.data?.status === 403) {
         sessionExpired(navigate);
       }
       else {

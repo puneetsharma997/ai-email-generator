@@ -124,3 +124,4 @@ export const authErrorMessages = {
 }
 
 export const tokenExpiredMessage = 'Session expired. Please log in again.'
+export const connectionErrorMessage = 'The server is taking longer than expected to respond. Please try again soon.'

@@ -6,6 +6,7 @@ import { API_GET_EMAIL_USAGE } from '../../api/api-urls';
 import api from '../../api/axios-instance';
 import Logo from '../../assets/logo.png';
 import { useEmailGeneratorStore } from '../../store/store';
+import { connectionErrorMessage } from '../../utils/constants';
 import { handleGoToHomepage, sessionExpired } from '../../utils/helper';
 import Auth from '../Auth/Auth';
 import CustomButton from '../CustomButton/CustomButton';
@@ -29,7 +30,14 @@ const Navbar = () => {
       setUsageDetails(res?.data);
     }
     catch (error) {
-      if (error?.response?.data?.status === 403) {
+      if (error?.code === 'ERR_NETWORK') {
+        CustomToast({
+          type: 'error',
+          message: connectionErrorMessage,
+          duration: 5000,
+        });
+      }
+      else if (error?.response?.data?.status === 403) {
         sessionExpired(navigate);
       }
       else {
@@ -41,7 +49,6 @@ const Navbar = () => {
       }
     }
   }
-
   // initial render
   useEffect(() => {
     if (!accessToken) return;

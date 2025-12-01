@@ -7,6 +7,7 @@ import { API_CHANGE_PASSWORD } from "../../api/api-urls";
 import api from "../../api/axios-instance";
 import LockIcon from '../../assets/lock-icon.png';
 import { useEmailGeneratorStore } from "../../store/store";
+import { connectionErrorMessage } from "../../utils/constants";
 import { sessionExpired, validatePasswordMatch } from "../../utils/helper";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomToast from "../CustomToast/CustomToast";
@@ -57,7 +58,14 @@ const ChangePassword = () => {
       }, 1500);
     }
     catch (error) {
-      if (error?.response?.data?.status === 403) {
+      if (error?.code === 'ERR_NETWORK') {
+        CustomToast({
+          type: 'error',
+          message: connectionErrorMessage,
+          duration: 5000,
+        });
+      }
+      else if (error?.response?.data?.status === 403) {
         sessionExpired(navigate);
       }
       else {

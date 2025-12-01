@@ -20,7 +20,7 @@ app.use("/usage", usageRoute);
 app.use("/user", userRoute);
 app.use("/password", passwordRoute);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`App is listening at port ${PORT}`);
 })

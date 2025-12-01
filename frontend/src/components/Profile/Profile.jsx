@@ -21,8 +21,8 @@ const Profile = () => {
       <Content>
         {/* stats card section */}
         <StatsContainer>
-          <StatsCard title={usageDetails?.usedToday} subTitle='Emails Generated' titleStyle={{ fontSize: '2rem' }} />
-          <StatsCard title={usageDetails?.remaining} subTitle='Emails Pending' titleStyle={{ fontSize: '2rem' }} />
+          <StatsCard title={usageDetails?.usedToday || 0} subTitle='Emails Generated' titleStyle={{ fontSize: '2rem' }} />
+          <StatsCard title={usageDetails?.remaining || 0} subTitle='Emails Pending' titleStyle={{ fontSize: '2rem' }} />
           <StatsCard title={'Free'} subTitle='Current Plan' />
         </StatsContainer>
 

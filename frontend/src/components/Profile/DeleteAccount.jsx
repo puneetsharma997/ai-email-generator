@@ -6,6 +6,7 @@ import { API_DELETE_USER } from "../../api/api-urls";
 import api from "../../api/axios-instance";
 import WarningIcon from '../../assets/warning-icon.png';
 import { useEmailGeneratorStore } from "../../store/store";
+import { connectionErrorMessage } from "../../utils/constants";
 import { sessionExpired } from "../../utils/helper";
 import CustomToast from "../CustomToast/CustomToast";
 import { StyledCardHeader } from "./ProfileCard";
@@ -32,7 +33,14 @@ const DeleteAccount = () => {
       }, 1500);
     }
     catch (error) {
-      if (error?.response?.data?.status === 403) {
+      if (error?.code === 'ERR_NETWORK') {
+        CustomToast({
+          type: 'error',
+          message: connectionErrorMessage,
+          duration: 5000,
+        });
+      }
+      else if (error?.response?.data?.status === 403) {
         sessionExpired(navigate);
       }
       else {
