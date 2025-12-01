@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { API_GENERATE_EMAIL } from '../../api/api-urls';
 import api from '../../api/axios-instance';
@@ -53,6 +54,7 @@ const Homepage = () => {
       }));
     }
     catch (error) {
+      toast.dismiss();
       if (error?.code === 'ERR_NETWORK') {
         CustomToast({
           type: 'error',

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Button, Popconfirm } from "antd";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API_DELETE_USER } from "../../api/api-urls";
 import api from "../../api/axios-instance";
@@ -33,6 +34,7 @@ const DeleteAccount = () => {
       }, 1500);
     }
     catch (error) {
+      toast.dismiss();
       if (error?.code === 'ERR_NETWORK') {
         CustomToast({
           type: 'error',

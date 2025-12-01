@@ -2,6 +2,7 @@ import { SaveOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Input } from "antd";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API_GET_USER, API_UPDATE_USER } from "../../api/api-urls";
 import api from "../../api/axios-instance";
@@ -36,6 +37,7 @@ const ProfileCard = () => {
       setProfileInput(userDetailsObj);
     }
     catch (error) {
+      toast.dismiss();
       if (error?.code === 'ERR_NETWORK') {
         CustomToast({
           type: 'error',

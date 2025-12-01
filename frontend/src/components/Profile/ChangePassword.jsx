@@ -2,6 +2,7 @@ import { LockOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Input } from "antd";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API_CHANGE_PASSWORD } from "../../api/api-urls";
 import api from "../../api/axios-instance";
@@ -58,6 +59,7 @@ const ChangePassword = () => {
       }, 1500);
     }
     catch (error) {
+      toast.dismiss();
       if (error?.code === 'ERR_NETWORK') {
         CustomToast({
           type: 'error',

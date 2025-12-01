@@ -1,6 +1,7 @@
 import { UserAddOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { API_GET_EMAIL_USAGE } from '../../api/api-urls';
 import api from '../../api/axios-instance';
@@ -30,6 +31,7 @@ const Navbar = () => {
       setUsageDetails(res?.data);
     }
     catch (error) {
+      toast.dismiss();
       if (error?.code === 'ERR_NETWORK') {
         CustomToast({
           type: 'error',
@@ -66,7 +68,7 @@ const Navbar = () => {
         <p>AI Email Generator</p>
       </StyledLeftContainer>
 
-      <StyledRightContainer>
+      <StyledRightContainer accessToken={accessToken}>
         {!accessToken ?
           <CustomButton
             label='Get Started'
@@ -135,16 +137,20 @@ const StyledLeftContainer = styled.div`
 
 const StyledRightContainer = styled.div`
   padding-right: 2rem;
-  width: 8.5rem;
-  height: 2.5rem;
+  width: ${({ accessToken }) => (accessToken ? 'auto' : '8.5rem')};
+  height: ${({ accessToken }) => (accessToken ? 'auto' : '2.7rem')};
 
   @media (min-width: 350px) and (max-width: 450px) {
-    width: 7rem;
-    height: 2.3rem;
+    // width: 7rem;
+    // height: 2.3rem;
+    width: ${({ accessToken }) => (accessToken ? 'auto' : '7rem')};
+    height: ${({ accessToken }) => (accessToken ? 'auto' : '2.3rem')};
   }
   @media (min-width: 100px) and (max-width: 349px) {
-    width: 6.6rem;
-    height: 2.1rem;
+    // width: 6.6rem;
+    // height: 2.1rem;
+    width: ${({ accessToken }) => (accessToken ? 'auto' : '6.6rem')};
+    height: ${({ accessToken }) => (accessToken ? 'auto' : '2.1rem')};
   }
 `
 
