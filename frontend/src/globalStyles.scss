@@ -1,0 +1,80 @@
+:root {
+  --color-light-grey: #f9fafb;
+  --color-dark-grey: #e5e7eb;
+  --color-disabled-grey: #d1d5db;
+  --color-primary-purple: #7869eb;
+  --color-primary-purple-hover: #a694eb;
+  --color-primary-gradient: linear-gradient(135deg, #8a83f2, #7d8ffb, #6fcaff);
+  --color-primary-gradient-disabled: linear-gradient(135deg, #a79df5, #9aa4fb, #9cd6ff);
+  --color-primary-gradient-hover: linear-gradient(135deg, rgba(138, 131, 242, 0.1), rgba(125, 143, 251, 0.1), rgba(111, 202, 255, 0.1));
+  --color-tabs-hover: #6366f10d;
+  --color-borders: #ddd6f9;
+  --color-black-label: #1f2937;
+  --color-grey-label: #4b5563;
+  --color-secondary-grey-label: #64748b;
+  --color-background: #f6f9fa;
+  --color-warning: #faad14;
+  --color-error: #ff4d4f;
+  --color-success: #10b981;
+  --color-info: #16b1ff;
+
+  --primary-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif --font-h1-xl: 3rem;
+  --font-h1-lg: 2.25rem;
+  --font-h1-sm: 1.875rem;
+  --font-h1-xsm: 1.5rem;
+
+  --font-h2-xl: 1.3rem;
+  --font-h2-lg: 1.2rem;
+  --font-h2-sm: 1.1rem;
+
+  --font-h3-xl: 1.125rem;
+  --font-h3-lg: 1rem;
+
+  --font-h4-xl: 0.875rem;
+  --font-h4-lg: 0.75rem;
+
+  --bp-sm: 500px;
+  --md: 800px;
+  --lg: 1024px;
+}
+
+body {
+  background-color: var(--color-background);
+  box-sizing: border-box;
+  margin: 0rem;
+
+  p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+}
+
+.toast-message {
+  font-size: 0.95rem !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+// react hot toast css
+.react-hot-toast {
+  z-index: 1001 !important;
+}
+
+// ant d spinner css
+.ant-spin-dot-item {
+  background: var(--color-primary-purple) !important;
+}
+
+// ant d select field css
+.ant-select-item-option-selected {
+  background-color: #7072f51a !important;
+}
+
+// profile dropdown menu css
+.profile-menu .ant-dropdown-menu-item:hover {
+  background: var(--color-primary-gradient-hover) !important;
+  color: var(--color-primary-purple) !important;
+}
+
+// loading icon in buton css
+.ant-btn-loading-icon {
+  margin-right: 0.8rem;
+}
