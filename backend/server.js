@@ -14,6 +14,11 @@ app.disable("etag");
 app.use(cors());
 app.use(express.json());
 
+// HEALTH CHECK (Render requires this)
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // Register routes
 app.use("/generate", generateRoute);
 app.use("/usage", usageRoute);
