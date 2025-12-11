@@ -62,7 +62,17 @@ router.post('/', async (req, res) => {
       emailOutput = result?.response?.text() || "";
     }
     catch (error) {
-      return res.status(error?.status).json({ status: error?.status, success: false, message: error.message || 'Error while generating email.' });
+      let message = 'Something went wrong while generating the email.';
+
+      if (error?.status === 429) {
+        message = 'The AI service is currently handling high traffic. Please try again in a minute.';
+      }
+
+      if (error?.status === 500) {
+        message = 'The AI model is temporarily unavailable. Please try again shortly.';
+      }
+
+      return res.status(error?.status).json({ status: error?.status, success: false, message: message });
     }
 
     // get latest usage count
@@ -75,7 +85,7 @@ router.post('/', async (req, res) => {
     res.status(200).json({ status: 200, success: true, output: emailOutput, remaining: process.env.DAILY_LIMIT - newCount });
   }
   catch (error) {
-    res.status(error?.status).json({ status: error?.status, success: false, message: error.message });
+    res.status(error?.status).json({ status: error?.status, success: false, message: error?.message });
   }
 });
 
