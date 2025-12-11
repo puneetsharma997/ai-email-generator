@@ -55,8 +55,8 @@ npm install
 Create a .env file in /frontend:
 VITE_SUPABASE_URL=your-url
 VITE_SUPABASE_ANON_KEY=your-key
-VITE_BASE_URL=http://localhost:5173
-VITE_API_BASE_URL=http://localhost:5000
+VITE_BASE_URL=http://localhost:5173 (frontend server url)
+VITE_API_BASE_URL=http://localhost:5000 (backend server url)
 
 Run the frontend:
 npm run dev
