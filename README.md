@@ -6,29 +6,29 @@ A fully responsive, AI-driven communication platform designed to accelerate and 
 ## 🚀 **Tech Stack**
 
 ### **Frontend**
-- ⚛️ React  
-- 🎨 Ant Design  
-- 🌐 Zustand  
+- ⚛️ React
+- 🎨 Ant Design
+- 🌐 Zustand
 
 ### **Backend**
-- 🚂 Express.js  
-- 🔐 Supabase Authentication  
+- 🚂 Express.js
+- 🔐 Supabase Authentication
 - 🤖 Google Generative AI - powered specifically by the Gemini API
 
 ### **Other**
-- ⚡ Vite  
-- 🟢 Node.js  
+- ⚡ Vite
+- 🟢 Node.js
 - 🔌 REST APIs
 
 ---
-  
+
 ## 📌 **Key Features**
-- 📱 Fully responsive UI optimized for all devices  
-- 🤖 AI-powered email generation with dynamic prompts  
-- 🧩 Clean and modern UI with Ant Design  
-- ⚡ Lightweight global state using Zustand  
-- 🔒 Secure authentication with Supabase  
-- 🔧 Express.js backend for routing and business logic  
+- 📱 Fully responsive UI optimized for all devices
+- 🤖 AI-powered email generation with dynamic prompts
+- 🧩 Clean and modern UI with Ant Design
+- ⚡ Lightweight global state using Zustand
+- 🔒 Secure authentication with Supabase
+- 🔧 Express.js backend for routing and business logic
 
 ---
 
@@ -67,14 +67,14 @@ npm install
 
 
 Create a .env file in /backend:
-GEMINI_API_KEY=your-key
+AI_API_KEY=your-ai-api-key
 SUPABASE_URL=your-url
 SUPABASE_SERVICE_ROLE_KEY=your-key
 SUPABASE_ANON_KEY=your-key
 DAILY_LIMIT=3
 
 Run the backend:
-npm start
+npm run dev
 ```
 
 ---

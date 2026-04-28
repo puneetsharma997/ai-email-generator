@@ -1,11 +1,12 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import express from "express";
 import { supabase } from "../supabase/index.js";
+import Groq from "groq-sdk";
 import { emailPrompt, replyPrompt } from "../utils/buildPrompt.js";
 import { verifyUserFromToken } from "../utils/verifyUser.js";
 
 const router = express.Router();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const groq = new Groq({ apiKey: process.env.AI_API_KEY });
+const SUPER_USER = process.env.SUPER_USER;
 
 // Generate new email API
 router.post('/', async (req, res) => {
@@ -16,50 +17,55 @@ router.post('/', async (req, res) => {
     }
 
     const userId = user?.id;
+    const isSuperUser = userId === SUPER_USER;
 
-    // get usage record
-    const { data: usage, error: fetchError } = await supabase.from('usage_limits').select('*').eq('id', userId).maybeSingle();
+    let usage = null;
 
-    // checking db errors
-    if (fetchError) {
-      return res.status(fetchError?.status).json({ status: fetchError?.status, success: false, message: "Database Fetch Error" });
-    }
+    // Only fetch usage if NOT super user
+    if (!isSuperUser) {
+      const { data, error: fetchError } = await supabase.from('usage_limits').select('*').eq('id', userId).maybeSingle();
 
-    const today = new Date().toISOString().split('T')[0];
+      // checking db errors
+      if (fetchError) {
+        return res.status(fetchError?.status).json({ status: fetchError?.status, success: false, message: "Database Fetch Error" });
+      }
 
-    // reset if new day or no record
-    if (!usage || usage?.last_reset !== today) {
-      const reset = {
-        id: userId,
-        emails_used: 0,
-        last_reset: today
-      };
+      usage = data;
 
-      await supabase.from("usage_limits").upsert(reset);
-    }
+      const today = new Date().toISOString().split('T')[0];
 
-    // daily limit check
-    else if (usage?.emails_used >= process.env.DAILY_LIMIT) {
-      return res.status(429).json({ success: false, message: 'Daily email limit reached' })
+      // reset if new day or no record
+      if (!usage || usage?.last_reset !== today) {
+        const reset = {
+          id: userId,
+          emails_used: 0,
+          last_reset: today
+        };
+
+        await supabase.from("usage_limits").upsert(reset);
+      }
+
+      // daily limit check
+      else if (usage?.emails_used >= process.env.DAILY_LIMIT) {
+        return res.status(429).json({ success: false, message: 'Daily email limit reached' })
+      }
     }
 
     // build prompt by using helper function
     const data = req.body;
-    let prompt = '';
-    if (data?.mode === 'reply') {
-      prompt = replyPrompt(data);
-    }
-    else {
-      prompt = emailPrompt(data);
-    }
-    // const prompt = emailPrompt(data);
+    let prompt = data?.mode === 'reply'
+      ? replyPrompt(data)
+      : emailPrompt(data);
 
-    // call gemini
+    // call AI
     let emailOutput = "";
     try {
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-      const result = await model.generateContent(prompt);
-      emailOutput = result?.response?.text() || "";
+      const chatCompletion = await groq.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "llama-3.3-70b-versatile",
+      });
+
+      emailOutput = chatCompletion.choices[0]?.message?.content || "";
     }
     catch (error) {
       let message = 'Something went wrong while generating the email.';
@@ -75,14 +81,25 @@ router.post('/', async (req, res) => {
       return res.status(error?.status).json({ status: error?.status, success: false, message: message });
     }
 
-    // get latest usage count
-    const { data: latest } = await supabase.from('usage_limits').select('emails_used').eq('id', userId).single();
-    const newCount = (latest?.emails_used || 0) + 1;
+    // Increment usage ONLY if NOT super user
+    if (!isSuperUser) {
+      const { data: latest } = await supabase.from('usage_limits').select('emails_used').eq('id', userId).single();
 
-    // increment usage count and update in supabase
-    await supabase.from('usage_limits').update({ emails_used: newCount }).eq('id', userId);
+      const newCount = (latest?.emails_used || 0) + 1;
 
-    res.status(200).json({ status: 200, success: true, output: emailOutput, remaining: process.env.DAILY_LIMIT - newCount });
+      // increment usage count and update in supabase
+      await supabase.from('usage_limits').update({ emails_used: newCount }).eq('id', userId);
+
+      return res.status(200).json({ status: 200, success: true, output: emailOutput, remaining: process.env.DAILY_LIMIT - newCount });
+    }
+
+    // Super user response (no limit)
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      output: emailOutput,
+      remaining: process.env.DAILY_LIMIT
+    });
   }
   catch (error) {
     res.status(error?.status).json({ status: error?.status, success: false, message: error?.message });
