@@ -14,6 +14,7 @@ import CustomButton from '../CustomButton/CustomButton';
 import CustomToast from '../CustomToast/CustomToast';
 import ProfileDropdown from './ProfileDropdown';
 
+// navbar component which will be shown on all pages
 const Navbar = () => {
   const navigate = useNavigate();
   const { accessToken, setUsageDetails } = useEmailGeneratorStore();
