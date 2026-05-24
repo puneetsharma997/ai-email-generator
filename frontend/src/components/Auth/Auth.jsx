@@ -11,6 +11,7 @@ import ForgotPassword from './ForgotPassword';
 import Login from './Login';
 import Signup from './Signup';
 
+// Main auth component for login, sign up and forgot password
 const Auth = ({ showModal, setShowModal }) => {
 
   const [tabValue, setTabValue] = useState('Login');

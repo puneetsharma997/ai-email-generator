@@ -3,6 +3,7 @@ import { Input } from 'antd';
 import { useState } from 'react';
 import CustomButton from '../CustomButton/CustomButton';
 
+// login component
 const Login = ({ handleForgotPassword, handleSubmit, isLoading }) => {
 
   const [loginValues, setLoginValues] = useState({

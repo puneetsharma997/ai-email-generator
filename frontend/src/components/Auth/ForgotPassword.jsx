@@ -8,6 +8,7 @@ import CustomToast from '../CustomToast/CustomToast';
 import { StyledCloseIcon } from './Auth';
 import { StyledInput } from './Login';
 
+// component for forgot password form
 const ForgotPassword = ({ setShowModal, setIsForgotPassword }) => {
 
   const [email, setEmail] = useState('');

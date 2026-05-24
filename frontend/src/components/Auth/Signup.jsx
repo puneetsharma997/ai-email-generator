@@ -4,6 +4,7 @@ import { useState } from "react";
 import { validatePasswordMatch } from "../../utils/helper";
 import CustomButton from "../CustomButton/CustomButton";
 
+// signup component
 const Signup = ({ handleSubmit, isLoading }) => {
 
   const [signupValues, setSignupValues] = useState({

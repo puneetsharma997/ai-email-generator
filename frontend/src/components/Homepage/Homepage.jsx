@@ -17,6 +17,7 @@ const Homepage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  // state to store form values for generating new email
   const [genEmailValues, setGenEmailValues] = useState({
     type: null,
     tone: 'professional',
@@ -26,6 +27,7 @@ const Homepage = () => {
     length: 'short'
   });
 
+  // state to store form values for replying to email
   const [replyEmailValues, setReplyEmailValues] = useState({
     originalEmail: null,
     tone: 'professional',
