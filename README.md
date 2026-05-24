@@ -13,7 +13,7 @@ A fully responsive, AI-driven communication platform designed to accelerate and 
 ### **Backend**
 - 🚂 Express.js
 - 🔐 Supabase Authentication
-- 🤖 Google Generative AI - powered specifically by the Gemini API
+- 🤖 Grok API
 
 ### **Other**
 - ⚡ Vite
