@@ -9,6 +9,7 @@ const ToastContent = ({ message }) => {
   );
 };
 
+// CustomToast component to display toast notifications with different types and icons
 export const CustomToast = ({
   message = "Success",
   type = "success",

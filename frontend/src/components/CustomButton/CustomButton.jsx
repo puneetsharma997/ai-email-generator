@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Button } from 'antd';
 
+// Custom button component with loading state and disabled state
 const CustomButton = ({ label, icon = null, onClick = () => { }, style, disabled = false, loading = false, children, type = 'button' }) => {
 
   // on click function for button
@@ -27,8 +28,8 @@ const CustomButton = ({ label, icon = null, onClick = () => { }, style, disabled
 }
 
 const StyledButton = styled(Button)`
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: center;
   color: #fff !important;
   font-size: 0.95rem;

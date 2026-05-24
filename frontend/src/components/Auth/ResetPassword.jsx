@@ -8,6 +8,7 @@ import CustomButton from "../CustomButton/CustomButton";
 import CustomToast from "../CustomToast/CustomToast";
 import { Heading, HeadingContainer } from "./ForgotPassword";
 
+// component for reset password
 const ResetPassword = () => {
 
   const navigate = useNavigate();
