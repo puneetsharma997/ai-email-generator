@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
     try {
       const chatCompletion = await groq.chat.completions.create({
         messages: [{ role: "user", content: prompt }],
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
       });
 
       emailOutput = chatCompletion.choices[0]?.message?.content || "";
